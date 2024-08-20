@@ -11,7 +11,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         float speed = Input.GetAxisRaw("Horizontal");
+        bool crouch = Input.GetKey(KeyCode.LeftControl);
+        float jump = Input.GetAxisRaw("Vertical");
+
         animator.SetFloat("Speed", Mathf.Abs(speed));
+        animator.SetBool("Crouch", crouch);
+        animator.SetFloat("Jump", jump);
+        
 
         Vector3 scale = transform.localScale;
         if (speed < 0)
