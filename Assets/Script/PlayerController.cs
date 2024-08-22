@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public ScoreController scoreController;
     public Animator animator;
     public float speed;
     public float jumpForce;
@@ -99,8 +101,14 @@ public class PlayerController : MonoBehaviour
         Vector3 position = transform.localPosition;
         if(position.y <= deathposition)
         {
-            var currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.name);
+            int currentScene = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentScene);
         }
+    }
+
+    public void PickUpKey()
+    {
+        Debug.Log("Key Pick Up");
+        scoreController.IncrementScore(10);
     }
 }
