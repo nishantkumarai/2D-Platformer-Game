@@ -101,14 +101,26 @@ public class PlayerController : MonoBehaviour
         Vector3 position = transform.localPosition;
         if(position.y <= deathposition)
         {
-            int currentScene = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(currentScene);
+            SceneRestart();
         }
+    }
+
+    private static void SceneRestart()
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
     }
 
     public void PickUpKey()
     {
         Debug.Log("Key Pick Up");
         scoreController.IncrementScore(10);
+    }
+
+    public void KillPlayer()
+    {
+        Debug.Log("Player dead");
+        animator.SetTrigger("Death");
+        SceneRestart();
     }
 }
