@@ -7,9 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     public Animator animator;
     public float speed;
-    public float jump;
+    public float jumpForce;
 
     private Rigidbody2D rb2d;
+    private bool isGrounded = false;
 
     private void Awake()
     {
@@ -37,9 +38,11 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
 
         // move charactor vertically
-        if(vertical > 0)
+        if(vertical > 0 && isGrounded)
         {
-            rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Force);
+            //animator.SetTrigger("Jump");
+            rb2d.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            //Debug.Log("running");
         }
     }
 
@@ -68,6 +71,22 @@ public class PlayerController : MonoBehaviour
         else
         {
             animator.SetBool("Jump", false);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.transform.tag == "platform")
+        {
+            isGrounded = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.transform.tag == "platform")
+        {
+            isGrounded = false;
         }
     }
 }
