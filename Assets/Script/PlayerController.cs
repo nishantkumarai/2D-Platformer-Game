@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb2d;
     private bool isGrounded = false;
+    [SerializeField]
+    private float deathposition;
 
     private void Awake()
     {
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
         PlayMovementAnimation(horizontal, vertical);
         MoveCharactor(horizontal, vertical);
+        FallDeath();
     }
 
     private void MoveCharactor(float horizontal, float vertical)
@@ -87,6 +91,16 @@ public class PlayerController : MonoBehaviour
         if (other.transform.tag == "platform")
         {
             isGrounded = false;
+        }
+    }
+
+    private void FallDeath()
+    {
+        Vector3 position = transform.localPosition;
+        if(position.y <= deathposition)
+        {
+            var currentScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(currentScene.name);
         }
     }
 }

@@ -1269,7 +1269,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.46, z: -10}
+  m_LocalPosition: {x: 0, y: 0.87, z: -10}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1877,6 +1877,7 @@ MonoBehaviour:
   animator: {fileID: 1575575641}
   speed: 5
   jumpForce: 7
+  deathposition: -15
 --- !u!4 &1575575648 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7276700889632866246, guid: b233188c88524ac4693c6cbc69198d11,
@@ -1914,7 +1915,7 @@ PrefabInstance:
     - target: {fileID: 7276700889632866246, guid: b233188c88524ac4693c6cbc69198d11,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7276700889632866246, guid: b233188c88524ac4693c6cbc69198d11,
         type: 3}
