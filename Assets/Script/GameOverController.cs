@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -24,7 +20,7 @@ public class GameOverController : MonoBehaviour
 
     public void PlayerDied()
     {
-        gameObject.SetActive(true);
+        this.gameObject.SetActive(true); 
     }
 
 
