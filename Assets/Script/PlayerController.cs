@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public ScoreController scoreController;
+    public GameOverController gameOverController;
     public Animator animator;
     public float speed;
     public float jumpForce;
@@ -101,15 +102,12 @@ public class PlayerController : MonoBehaviour
         Vector3 position = transform.localPosition;
         if(position.y <= deathposition)
         {
-            SceneRestart();
+            gameOverController.PlayerDied();
+            //SceneRestart();
         }
     }
 
-    private static void SceneRestart()
-    {
-        int currentScene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentScene);
-    }
+    
 
     public void PickUpKey()
     {
@@ -121,6 +119,6 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player dead");
         animator.SetTrigger("Death");
-        SceneRestart();
+        gameOverController.PlayerDied();
     }
 }
