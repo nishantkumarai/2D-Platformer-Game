@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,20 @@ using UnityEngine.UI;
 
 public class GameOverController : MonoBehaviour
 {
-    [SerializeField] public Button restartButton;
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button backButton;
 
     private void Awake()
     {
         restartButton.onClick.AddListener(SceneRestart);
+        backButton.onClick.AddListener(LobbyScene);
     }
+
+    private void LobbyScene()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void PlayerDied()
     {
         gameObject.SetActive(true);
