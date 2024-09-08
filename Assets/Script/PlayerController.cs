@@ -1,3 +1,5 @@
+using System;
+using UnityEditorInternal;
 using UnityEngine;
 
 
@@ -7,12 +9,14 @@ public class PlayerController : MonoBehaviour
     public GameOverController gameOverController;
     public Animator animator;
     public float speed;
-    public float jumpForce;
+    public float jumpPower;
 
-    private Rigidbody2D rb2d;
-    private bool isGrounded = false;
-    [SerializeField]
-    private float deathposition;
+    
+    [SerializeField] private float fallDeathposition;
+
+    [SerializeField] private Rigidbody2D rb2d;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
 
     private void Awake()
     {
@@ -22,34 +26,43 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Jump");
+        //float vertical = Input.GetAxisRaw("Jump");
         bool crouch = Input.GetKey(KeyCode.LeftControl);
 
         animator.SetBool("Crouch", crouch);
        
 
-        PlayMovementAnimation(horizontal, vertical);
-        MoveCharactor(horizontal, vertical);
+        PlayMovementAnimation(horizontal);
+        MoveCharactor(horizontal);
         FallDeath();
+
+        // move charactor vertically
+        if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
+
+            rb2d.velocity = new Vector2(rb2d.velocity.x, jumpPower);
+            //Debug.Log("running");
+            animator.SetTrigger("Jump");
+        }
+
+        if (Input.GetButtonUp("Jump") && rb2d.velocity.y > 0f)
+        {
+            rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y* 0.5f);
+        }
+
     }
 
-    private void MoveCharactor(float horizontal, float vertical)
+    
+
+    private void MoveCharactor(float horizontal)
     {
         //move charactor horizontally
         Vector3 position = transform.position;
         position.x += horizontal * speed * Time.deltaTime;
         transform.position = position;
-
-        // move charactor vertically
-        if(vertical > 0 && isGrounded)
-        {
-            //animator.SetTrigger("Jump");
-            rb2d.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            //Debug.Log("running");
-        }
     }
 
-    private void PlayMovementAnimation(float horizontal, float vertical)
+    private void PlayMovementAnimation(float horizontal)
     {
         //run
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
@@ -64,19 +77,15 @@ public class PlayerController : MonoBehaviour
             scale.x = Mathf.Abs(scale.x);
         }
         transform.localScale = scale;
-
-        //jump 
-        
-        if (vertical > 0)
-        {
-            animator.SetBool("Jump", true);
-        }
-        else
-        {
-            animator.SetBool("Jump", false);
-        }
+       
     }
 
+    private bool IsGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    /*
     private void OnCollisionStay2D(Collision2D other)
     {
         if (other.transform.tag == "platform")
@@ -91,12 +100,12 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
-    }
+    }*/
 
     private void FallDeath()
     {
         Vector3 position = transform.localPosition;
-        if(position.y <= deathposition)
+        if(position.y <= fallDeathposition)
         {
             gameOverController.PlayerDied();
             //SceneRestart();
@@ -116,5 +125,6 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player dead");
         animator.SetTrigger("Death");
         gameOverController.PlayerDied();
+        SoundManager.Instance.Play(Sounds.PlayerDeath);
     }
 }

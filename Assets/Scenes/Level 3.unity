@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 315534977}
   - component: {fileID: 315534976}
   - component: {fileID: 315534978}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ground
   m_TagString: platform
   m_Icon: {fileID: 0}
@@ -2413,6 +2413,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8614662046800630216, guid: 1f90e1e1b405c864783e212f8e33d0ec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3136,7 +3141,8 @@ PrefabInstance:
       value: -190
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6767089488679215745, guid: c96922fc73320a244ae738e94c98fab6, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c96922fc73320a244ae738e94c98fab6, type: 3}
